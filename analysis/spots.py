@@ -29,11 +29,17 @@ def z_slice(z_cord=False, z_indx=False, data_dir):
 
 def get_cord(data_dir, axis):
     cord_file   = open('out/' + axis)
+    cords   = [ float(i) for i in cord_file.readlines() ]
+    return cords
 
-    pass
+def x_cord(data_dir):
+    return get_cord(data_dir, 'x')
+
 def y_cord(data_dir):
-    pass
-def z_cord(data_
+    return get_cord(data_dir, 'y')
+
+def z_cord(data_dir):
+    return get_cord(data_dir, 'z')
 
 if __name__ == '__main__':
     pass
