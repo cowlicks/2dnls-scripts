@@ -2,7 +2,7 @@
 import numpy
 from os.path import isdir, join
 import pylab
-class data:
+class data(object):
     """ Data from 2dnls solver. """
     def __init__(self, out_dir):
         if not isdir(out_dir):
@@ -41,4 +41,5 @@ def plot_all(a):
 
 from tools.tools import lineout, z_section
 import tools.townes as townes
-from plots.plots import plot_all
+# TODO
+#from plots.plots import plot_all
