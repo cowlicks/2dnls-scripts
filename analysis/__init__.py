@@ -32,6 +32,24 @@ class data(object):
             self.a2[:, :, i]  = a * a.conjugate()
         self.a2 = self.a2.real
 
+class z_slice(object):
+    def __init__(self, index, out_dir):
+        self.x_file = open(join(out_dir, 'x'))
+        self.y_file = open(join(out_dir, 'y'))
+
+        self.x = [ float(i) for i in self.x_file.readlines() ]
+        self.y = [ float(i) for i in self.y_file.readlines() ] 
+
+        
+        ar_file_name = join(out_dir, 'ar.' + '%04g' % index)
+        ai_file_name = join(out_dir, 'ai.' + '%04g' % index)
+        
+        ar = numpy.genfromtxt(ar_file_name)
+        ai = numpy.genfromtxt(ai_file_name)
+        a = ar + 1j * ai
+        self.a2 = a * a.conjugate()
+        self.a2 = self.a2.real
+
 def plot_all(a):
     for i in range(a.nz):
         x, y = lineout(a, i)
