@@ -2,7 +2,7 @@
 import numpy
 from os.path import isdir, join
 import pylab
-class data(object):
+class Data(object):
     """ Data from 2dnls solver. """
     def __init__(self, out_dir):
         if not isdir(out_dir):
@@ -32,7 +32,7 @@ class data(object):
             self.a2[:, :, i]  = a * a.conjugate()
         self.a2 = self.a2.real
 
-class z_slice(object):
+class ZSlice(object):
     def __init__(self, index, out_dir):
         self.x_file = open(join(out_dir, 'x'))
         self.y_file = open(join(out_dir, 'y'))
@@ -50,14 +50,24 @@ class z_slice(object):
         self.a2 = a * a.conjugate()
         self.a2 = self.a2.real
 
-def plot_all(a):
-    for i in range(a.nz):
-        x, y = lineout(a, i)
-        pylab.plot(x, y)
-        pylab.savefig('lineout' + '%04g' % i)
+def plot_all(out_dir, save_dir):
+    z_file  = open(join(out_dir, 'z'))
+    z = [ float(i) for i in z_file.readlines() ]
+    nz = len(self.z)
+    for i in range(nz):
+        z_slice = ZSlice(i, out_dir)
         pylab.clf()
+        pylab.imshow(z_slice, interpolation='none',
+                extent=[
+                        min(z_slice.x), max(z_slice.x), 
+                        min(z_slice.y), max(z_slice.y) ])
+        pylab.gca().set_xlabel('x/w_0')
+        pylab.gca().set_ylabel('y/w_0')
+        pylab.title('z = %s' % i)
+        pylab.colorbar()
+        pylab.savefig(join(save_dir, 'slice%s' % i)
 
 from tools.tools import lineout, z_section
-import tools.townes as townes
+import tools.townes as townesk
 # TODO
 #from plots.plots import plot_all
